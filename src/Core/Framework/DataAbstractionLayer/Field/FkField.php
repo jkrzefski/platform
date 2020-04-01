@@ -6,7 +6,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\DefinitionInstanceRegistry;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldSerializer\FkFieldSerializer;
 
-class FkField extends Field implements StorageAware
+class FkField extends IdField implements StorageAware
 {
     public const PRIORITY = 70;
 
@@ -35,7 +35,7 @@ class FkField extends Field implements StorageAware
         $this->referenceClass = $referenceClass;
         $this->storageName = $storageName;
         $this->referenceField = $referenceField;
-        parent::__construct($propertyName);
+        parent::__construct($storageName, $propertyName);
     }
 
     public function compile(DefinitionInstanceRegistry $registry): void
