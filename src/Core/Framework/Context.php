@@ -72,6 +72,11 @@ class Context extends Struct
      */
     private $useCache = true;
 
+    /**
+     * @var \DateTime
+     */
+    private $dateTime;
+
     public function __construct(
         ContextSource $source,
         array $ruleIds = [],
@@ -81,7 +86,8 @@ class Context extends Struct
         float $currencyFactor = 1.0,
         int $currencyPrecision = 2,
         bool $considerInheritance = false,
-        string $taxState = CartPrice::TAX_STATE_GROSS
+        string $taxState = CartPrice::TAX_STATE_GROSS,
+        ?\DateTime $dateTime = null
     ) {
         $this->source = $source;
 
@@ -102,6 +108,7 @@ class Context extends Struct
         $this->currencyPrecision = $currencyPrecision;
         $this->considerInheritance = $considerInheritance;
         $this->taxState = $taxState;
+        $this->dateTime = $dateTime ?? new \DateTime();
     }
 
     /**
@@ -231,6 +238,16 @@ class Context extends Struct
     public function getUseCache(): bool
     {
         return $this->useCache;
+    }
+
+    public function getDateTime(): \DateTime
+    {
+        return $this->dateTime;
+    }
+
+    public function setDateTime(\DateTime $dateTime): void
+    {
+        $this->dateTime = $dateTime;
     }
 
     /**
