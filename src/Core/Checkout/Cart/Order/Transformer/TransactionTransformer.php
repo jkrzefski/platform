@@ -27,9 +27,21 @@ class TransactionTransformer
         Context $context
     ): array {
         return [
+            'id' => self::getId($transaction),
             'paymentMethodId' => $transaction->getPaymentMethodId(),
             'amount' => $transaction->getAmount(),
             'stateId' => $stateId,
         ];
+    }
+
+    private static function getId(Struct $struct): ?string
+    {
+        /** @var IdStruct|null $idStruct */
+        $idStruct = $struct->getExtensionOfType(OrderConverter::ORIGINAL_ID, IdStruct::class);
+        if ($idStruct !== null) {
+            return $idStruct->getId();
+        }
+
+        return null;
     }
 }
